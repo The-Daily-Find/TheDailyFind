@@ -50,6 +50,13 @@
   }
 }
 
+:root {
+  --custom-off-white: #f2f2f2;
+  --custom-pale-biege: #eae4d5;
+  --custom-warm-gray: #b6b09f;
+  --custom-black: #000000;
+}
+
 *,
 *::before,
 *::after {
@@ -60,8 +67,8 @@
 
 body {
   min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
+  color: var(--custom-black);
+  background: var(--custom-off-white);
   transition:
     color 0.5s,
     background-color 0.5s;

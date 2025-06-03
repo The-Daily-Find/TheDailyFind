@@ -1,11 +1,63 @@
 <template>
   <el-container>
-    <el-row>
-      <el-col style="background-color: black">
-        <el-text style="color: white; display: flex; justify-content: center"
-          >50% Discount Today!!
-        </el-text>
-      </el-col>
+    <!-- Navbar -->
+    <el-row style="width: 100%">
+      <el-header
+        style="
+          width: 100%;
+          height: 40px;
+          background-color: var(--custom-black);
+          color: white;
+          display: flex;
+          align-items: center;
+          padding: 0em 2em;
+        "
+      >
+        <el-row style="width: 100%" align="middle" justify="space-between">
+          <el-col :span="2" style="display: flex; align-items: center; gap: 5px">
+            <el-icon :size="20"><Phone /></el-icon>
+            <el-text style="font-size: 12px">+639123456789</el-text>
+          </el-col>
+          <el-col
+            :span="20"
+            style="display: flex; align-items: center; justify-content: center; gap: 5px"
+          >
+            <el-text>Get 50% off on an selected item | Shop now</el-text>
+          </el-col>
+          <el-col
+            :span="2"
+            style="display: flex; align-items: center; justify-content: end; gap: 1.5em"
+          >
+            <el-dropdown placement="bottom-start">
+              <el-row style="gap: 5px; cursor: pointer">
+                <el-text> Eng </el-text>
+                <el-icon :size="15" color="white"><ArrowDown /></el-icon>
+              </el-row>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item>The Action 1st</el-dropdown-item>
+                  <el-dropdown-item>The Action 2st</el-dropdown-item>
+                  <el-dropdown-item>The Action 3st</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+            <el-dropdown placement="bottom-start">
+              <el-row style="gap: 5px; cursor: pointer">
+                <el-text> Location </el-text>
+                <el-icon :size="15" color="white"><ArrowDown /></el-icon>
+              </el-row>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item>The Action 1st</el-dropdown-item>
+                  <el-dropdown-item>The Action 2st</el-dropdown-item>
+                  <el-dropdown-item>The Action 3st</el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </el-col>
+        </el-row>
+      </el-header>
+
       <el-col>
         <el-row align="middle" style="padding: 1em">
           <el-col :span="12">
@@ -25,34 +77,47 @@
       <el-divider style="margin: 0"></el-divider>
     </el-row>
 
-    <el-row style="width: 100%; height: 800px; padding: 1em; justify-content: center">
-      <el-col
-        style="height: 100%; width: 100%; background-color: aqua; border-radius: 15px"
-        :span="14"
-      >
-      </el-col>
-
-      <el-col style="width: 100%; height: 100%; padding-left: 1em" :span="10">
-        <el-row style="height: 100%">
-          <el-col
-            :span="11"
-            style="background-color: black; height: 50%; border-radius: 15px"
-          ></el-col>
-          <el-col
-            :span="11"
-            style="background-color: blue; height: 50%; margin-left: 1em; border-radius: 15px"
-          ></el-col>
-          <el-col
-            :span="23"
-            style="background-color: black; height: 50%; margin-top: 1em; border-radius: 15px"
-          ></el-col>
+    <!-- Hero -->
+    <el-row style="width: 100%; min-height: 800px; padding: 1em">
+      <el-col style="height: 100%; width: 100%" :span="14"> </el-col>
+      <el-col :span="10" style="width: 100%; height: 100%">
+        <el-row style="width: 100%; height: 100%">
+          <el-row style="width: 100%; height: 50%">
+            <el-row style="height: 100%; width: 50%" />
+            <el-row style="height: 100%; width: 50%" />
+          </el-row>
+          <el-row style="height: 50%; width: 100%" />
         </el-row>
       </el-col>
     </el-row>
+
+    <!-- Filters -->
+    <FilterView />
+
+    <!-- Products -->
+    <el-row class="cards-container" align="middle" justify="space-between">
+      <ProductCard v-for="(item, index) in productStore.getProducts" :key="index" :product="item" />
+    </el-row>
+
+    <!-- Footer -->
+    <el-footer>
+      <el-text>FOOTER</el-text>
+    </el-footer>
   </el-container>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getProducts } from '@/api/actions/product.actions'
+import FilterView from '@/components/home/FilterView.vue'
+import { useProductStore } from '@/stores/productStore'
+import { onMounted } from 'vue'
+
+const productStore = useProductStore()
+
+onMounted(async () => {
+  await getProducts()
+})
+</script>
 
 <style scoped>
 .el-container {
@@ -60,6 +125,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .logInSignUpCon {
@@ -69,5 +135,25 @@
   width: 10%;
   border-radius: 100px;
   background-color: #dfdfdf;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  justify-items: center;
+  gap: 1em;
+  width: 75%;
+  padding-bottom: 2em;
+}
+
+.el-text {
+  color: var(--custom-off-white);
+}
+
+.el-footer {
+  width: 100%;
+  height: 400px;
+  background: var(--custom-black);
+  padding: 2em;
 }
 </style>

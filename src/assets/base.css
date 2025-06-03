@@ -57,7 +57,9 @@
   --custom-warm-gray: #b6b09f;
   --custom-black: #000000;
   --color-green: #003e28;
-  --color-gray: #f5f6f6;
+
+  /* Custom gray for borders */
+  --custom-gray-border: #ccc5b3; /* A softened gray that blends with warm gray and pale beige */
 }
 
 *,

@@ -56,6 +56,8 @@
   --custom-pale-biege: #eae4d5;
   --custom-warm-gray: #b6b09f;
   --custom-black: #000000;
+  --color-green: #003e28;
+  --color-gray: #f5f6f6;
 }
 
 *,
@@ -69,8 +71,8 @@
 
 body {
   min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
+  color: var(--custom-black);
+  background: var(--custom-off-white);
   transition:
     color 0.5s,
     background-color 0.5s;

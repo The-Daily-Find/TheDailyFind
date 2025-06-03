@@ -13,3 +13,16 @@ export type SignupTypes = {
   address: string
   phone: string
 }
+
+export type ProductTypes = {
+  id: number
+  title: string
+  price: number
+  description: string
+  category: string
+  image: string
+  rating: {
+    rate: number
+    count: number
+  }
+}

@@ -46,6 +46,7 @@
                 <el-text> Location </el-text>
                 <el-icon :size="15" color="white"><ArrowDown /></el-icon>
               </el-row>
+              
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item>The Action 1st</el-dropdown-item>
@@ -96,8 +97,21 @@
 
     <!-- Products -->
     <el-row class="cards-container" align="middle" justify="space-between">
-      <ProductCard v-for="(item, index) in productStore.getProducts" :key="index" :product="item" />
+      <ProductCard
+        v-for="(item, index) in productStore.getProducts"
+        :key="index"
+        :product="item"
+        @add-to-cart="onAddToCart"
+      />
     </el-row>
+
+    <!-- Cart Drawer as child component -->
+    <CartDrawer
+      :visible="cartStore.drawerVisible"
+      :items="cartStore.items"
+      @close="cartStore.toggleDrawer(false)"
+      @remove="cartStore.removeFromCart"
+    />
 
     <!-- Footer -->
     <el-footer>
@@ -108,11 +122,20 @@
 
 <script setup lang="ts">
 import { getProducts } from '@/api/actions/product.actions'
+import CartDrawer from '@/components/CartDrawer.vue'
 import FilterView from '@/components/home/FilterView.vue'
+import type { ProductTypes } from '@/models/types'
+import { useCartStore } from '@/stores/cartStore'
 import { useProductStore } from '@/stores/productStore'
 import { onMounted } from 'vue'
 
 const productStore = useProductStore()
+const cartStore = useCartStore()
+
+function onAddToCart(product: ProductTypes) {
+  cartStore.addToCart(product)
+  // cartStore.toggleDrawer(true)
+}
 
 onMounted(async () => {
   await getProducts()

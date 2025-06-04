@@ -10,7 +10,7 @@
               style="color: var(--custom-black); font-size: 34px; font-weight: bold"
               >The Daily Find</el-text
             >
-            <el-button size="large" class="btn">Login account</el-button>
+            <!-- <el-button size="large" class="btn">Login account</el-button> -->
           </el-row>
         </el-header>
         <el-main
@@ -32,7 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import LoginForm from '@/components/login/LoginForm.vue'
+import LoginForm from '@/components/login/LoginForm.vue';
+
 </script>
 
 <style scoped>

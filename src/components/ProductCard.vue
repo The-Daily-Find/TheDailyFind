@@ -23,13 +23,20 @@
         class="poppins-bold"
         >{{ `₱ ${product.price}` }}</el-text
       >
-      <el-button round class="poppins-semibold card-button" size="large">Add to cart</el-button>
+      <el-button
+        round
+        class="poppins-semibold card-button"
+        size="large"
+        @click="handleAddToCart"
+        >Add to cart</el-button
+      >
     </el-row>
   </el-col>
 </template>
 
 <script setup lang="ts">
 import type { ProductTypes } from '@/models/types'
+import { useCartStore } from '@/stores/cartStore'
 import { ref } from 'vue'
 
 type Props = {
@@ -37,6 +44,12 @@ type Props = {
 }
 const props = defineProps<Props>()
 const rate = ref(Math.floor(props.product.rating.rate))
+const cartStore = useCartStore()
+
+function handleAddToCart() {
+  cartStore.addToCart(props.product)
+  // cartStore.toggleDrawer(true)
+}
 </script>
 
 <style scoped>

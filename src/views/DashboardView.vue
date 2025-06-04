@@ -33,13 +33,8 @@
       </el-header>
 
       <!-- Main -->
-      <el-main style="">
-        <el-row :gutter="24" align="middle" justify="space-between" style="height: 200px">
-          <el-col :span="8" style="width: 100%; height: 100%">
-            <el-card style="width: 100%; height: 100%">
-              <el-text>CARD</el-text>
-            </el-card>
-          </el-col>
+      <el-main>
+        <el-row :gutter="16" align="middle" style="height: 200px">
           <el-col :span="8" style="width: 100%; height: 100%">
             <el-card style="width: 100%; height: 100%">
               <el-text>CARD</el-text>
@@ -51,12 +46,43 @@
             </el-card>
           </el-col>
         </el-row>
-        <el-row style="margin-top: 1em; height: 100%">
-          <el-table :data="tableData">
-            <el-table-column type="index" width="50" />
-            <el-table-column prop="date" label="Date" />
-            <el-table-column prop="name" label="Name" />
-            <el-table-column prop="address" label="Address" />
+        <el-row style="margin-top: 1em">
+          <el-table show-overflow-tooltip :data="dummyProducts" style="width: 100%" height="100%">
+            <el-table-column type="selection" width="55" />
+            <el-table-column
+              sortable
+              column-key="date"
+              prop="category"
+              label="Category"
+              width="150"
+              :filters="[
+                { text: 'Electronics', value: 'Electronics' },
+                { text: 'Fitness', value: 'Fitness' },
+                { text: 'Footwear', value: 'Footwear' },
+                { text: 'Home Appliances', value: 'Home Appliances' },
+              ]"
+              :filter-method="filterHandler"
+            >
+              <template #default="{ row }">
+                <el-tag>{{ row.category }}</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="title" label="Title" />
+            <el-table-column prop="price" label="Price" width="150" />
+            <el-table-column label="Operations" width="150">
+              <template #default="scope">
+                <el-button size="small" @click="handleEdit(scope.$index, scope.row)">
+                  Edit
+                </el-button>
+                <el-button
+                  size="small"
+                  type="danger"
+                  @click="handleDelete(scope.$index, scope.row)"
+                >
+                  Delete
+                </el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </el-row>
       </el-main>
@@ -65,43 +91,21 @@
 </template>
 
 <script setup lang="ts">
-const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-08',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-06',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-07',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
+import { dummyProducts } from '@/models/constant'
+import type { ProductTypes } from '@/models/types'
+import type { TableColumnCtx } from 'element-plus/lib'
+
+const handleEdit = (index: number, row: ProductTypes) => {
+  console.log(index, row)
+}
+const handleDelete = (index: number, row: ProductTypes) => {
+  console.log(index, row)
+}
+
+const filterHandler = (value: string, row: ProductTypes, column: TableColumnCtx<ProductTypes>) => {
+  const property = column['property'] as keyof ProductTypes
+  return row[property] === value
+}
 </script>
 
 <style scoped>
@@ -111,12 +115,11 @@ const tableData = [
 }
 
 .el-table {
-  border-radius: 15px;
+  border-radius: 4px;
   height: 100%;
 }
 
-/* .el-table {
-  --el-table-tr-bg-color: none;
-  --el-table-bg-color: none;
-} */
+.el-table {
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.12);
+}
 </style>

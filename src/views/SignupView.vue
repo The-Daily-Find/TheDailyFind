@@ -10,7 +10,7 @@
               style="color: var(--custom-black); font-size: 34px; font-weight: bold"
               >The Daily Find</el-text
             >
-            <!-- <el-button size="large" class="btn">Login account</el-button> -->
+            <el-button size="large" class="btn">Sign up</el-button>
           </el-row>
         </el-header>
         <el-main
@@ -21,7 +21,7 @@
             justify-content: center;
           "
         >
-          <LoginForm />
+          <SignupForm />
         </el-main>
       </el-container>
       <el-aside style="width: 500px; background: var(--custom-black); border-radius: 15px">
@@ -32,8 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import LoginForm from '@/components/login/LoginForm.vue';
-
+import SignupForm from '@/components/signup/SignupForm.vue';
 </script>
 
 <style scoped>

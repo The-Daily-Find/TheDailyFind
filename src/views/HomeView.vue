@@ -101,6 +101,8 @@
         v-for="(item, index) in productStore.getProducts"
         :key="index"
         :product="item"
+        class="product-card"
+        @click="goToProduct(item.id)"
         @add-to-cart="onAddToCart"
       />
     </el-row>
@@ -128,13 +130,19 @@ import type { ProductTypes } from '@/models/types'
 import { useCartStore } from '@/stores/cartStore'
 import { useProductStore } from '@/stores/productStore'
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
 const productStore = useProductStore()
 const cartStore = useCartStore()
+const router = useRouter()
 
 function onAddToCart(product: ProductTypes) {
   cartStore.addToCart(product)
   // cartStore.toggleDrawer(true)
+}
+
+function goToProduct(id: number) {
+  router.push({ name: 'ProductViewer', params: { id } })
 }
 
 onMounted(async () => {
@@ -178,5 +186,22 @@ onMounted(async () => {
   height: 400px;
   background: var(--custom-black);
   padding: 2em;
+}
+
+.product-card {
+  cursor: pointer;
+  transition:
+    transform 0.2s cubic-bezier(.4,2,.6,1),
+    box-shadow 0.2s;
+  box-shadow: 0 2px 8px #0001;
+  border-radius: 16px;
+}
+
+.product-card:hover {
+  transform: translateY(-8px) scale(1.03) rotate(-1deg);
+  box-shadow: 0 8px 32px #0002;
+  background: #f5f7fa;
+  /* Optional: subtle border or highlight */
+  border: 1.5px solid var(--el-color-primary);
 }
 </style>
